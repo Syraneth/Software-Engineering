@@ -26,20 +26,21 @@ public class OutputThread implements Runnable{
                 out.println(userInput);
                 System.out.print ("input: ");
             }
-
+            
+            
             out.close();
             echoSocket.close();
 
         } 
         catch (UnknownHostException e) 
         {  
-                System.err.println();            
-                System.exit(1);           
+            System.err.println();            
+            System.exit(1);           
         } 
         catch (IOException e) {            
-                System.err.println();            
-                System.exit(1);            
-                }
+            System.err.println();            
+            System.exit(1);            
+        }
 
     }
 }

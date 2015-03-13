@@ -25,9 +25,9 @@ public class EchoClient
                 t2.start(); 
 
         } catch (UnknownHostException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } 
 
     }
