@@ -14,6 +14,7 @@ public class InputThread implements Runnable {
 	    BufferedReader in = null;
 
 	    try {
+                System.out.println("Input: ");
 	        in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 
 	        while (true) {
@@ -22,7 +23,7 @@ public class InputThread implements Runnable {
 	    } catch (UnknownHostException e) {  
 	            System.err.println();
 	            System.exit(1);  
-	    } catch (IOException e) {
+	    } catch (IOException e) { 
 	            System.err.println();  
 	            System.exit(1); 
 	}
