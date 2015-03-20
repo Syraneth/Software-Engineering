@@ -4,7 +4,7 @@ public class EchoClient
 {
     public static void main(String[] args)
     {
-        String serverHostname = new String("192.168.0.142");
+        String serverHostname = new String("192.168.0.80");
         int portNum = 5000; 
         System.out.println("Attempting to connect to host" + serverHostname + "on port " + portNum); 
 

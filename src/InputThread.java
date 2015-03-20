@@ -9,6 +9,7 @@ public class InputThread implements Runnable {
     
     private int[] carsEntered = {0,0,0,0};
     private int[] carsExited = {0,0,0,0};
+    private int[] pedestrians = {0,0,0,0};
     Socket echoSocket; 
 
     InputThread(Socket socket)
@@ -33,13 +34,19 @@ public class InputThread implements Runnable {
                     String temp = st.nextToken();
                     if(temp.length() == 1)
                     {
+                        //Pedestrian 
                         System.out.println("Ett");
+                        enterData(pedestrians, temp);
                     }
                     else
                     {
+                        //Car
                         breakdownToken(temp);  
                     }
                     System.out.println("this: "+temp);
+                    System.out.println("Entered: " + java.util.Arrays.toString(carsEntered));
+                    System.out.println("Exited: " + java.util.Arrays.toString(carsExited));
+                    System.out.println("Pedestrians: " + java.util.Arrays.toString(pedestrians));
                 }
                 
             }		
@@ -69,8 +76,7 @@ public class InputThread implements Runnable {
             System.out.println(current);
             ioCheck = !ioCheck;
         }
-        System.out.println(java.util.Arrays.toString(carsEntered));
-        System.out.println(java.util.Arrays.toString(carsExited));
+        
     }
     public int[] enterData(int[] array, String token)
     {
