@@ -3,10 +3,12 @@ import java.io.*;
 public class OutputThread implements Runnable{
 	
     Socket echoSocket;
+    TrafficData trafficData;
 
-    OutputThread(Socket socket)
+    OutputThread(Socket socket, TrafficData tData)
     {
         echoSocket = socket; 
+        trafficData = tData;
     }
     
     @Override

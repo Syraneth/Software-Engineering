@@ -3,19 +3,25 @@ import java.io.*;
 import java.util.StringTokenizer;
 import java.util.Arrays;
 import java.lang.String;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class InputThread implements Runnable {
     
     private int[] carsEntered = {0,0,0,0};
     private int[] carsExited = {0,0,0,0};
-    private int[] pedestrians = {0,0,0,0};
+    
     Socket echoSocket; 
+    EchoClient eClient;
+    TrafficData trafficData;
 
-    InputThread(Socket socket)
+    InputThread(Socket socket, TrafficData tData)
     {
-            echoSocket = socket; 
+        echoSocket = socket; 
+        trafficData = tData;
     }
+    
     @Override
     public void run()
     {
@@ -27,7 +33,6 @@ public class InputThread implements Runnable {
 
 
             while (true) {
-                //System.out.println("echo: " + in.readLine());
                 StringTokenizer st = new StringTokenizer(in.readLine(),";");
                 while (st.hasMoreTokens()) 
                 {
@@ -35,8 +40,7 @@ public class InputThread implements Runnable {
                     if(temp.length() == 1)
                     {
                         //Pedestrian 
-                        System.out.println("Ett");
-                        enterData(pedestrians, temp);
+                        trafficData.pedestrians.add(temp);
                     }
                     else
                     {
@@ -44,9 +48,11 @@ public class InputThread implements Runnable {
                         breakdownToken(temp);  
                     }
                     System.out.println("this: "+temp);
-                    System.out.println("Entered: " + java.util.Arrays.toString(carsEntered));
-                    System.out.println("Exited: " + java.util.Arrays.toString(carsExited));
-                    System.out.println("Pedestrians: " + java.util.Arrays.toString(pedestrians));
+                    System.out.println(Arrays.toString(trafficData.laneOne.toArray()));
+                    System.out.println(Arrays.toString(trafficData.laneTwo.toArray()));
+                    System.out.println(Arrays.toString(trafficData.laneThree.toArray()));
+                    System.out.println(Arrays.toString(trafficData.laneFour.toArray()));
+                    System.out.println(Arrays.toString(trafficData.pedestrians.toArray()));
                 }
                 
             }		
@@ -62,36 +68,40 @@ public class InputThread implements Runnable {
     public void breakdownToken(String data){
         StringTokenizer breakdown = new StringTokenizer(data,":");
         boolean ioCheck = true;
+        String lane = "";
         while(breakdown.hasMoreTokens())
         {
             String current = breakdown.nextToken();
+            
             if(ioCheck == true)
             {
-                carsEntered = enterData(carsEntered,current);
+                lane = current;
+                System.out.println(lane);
             }
             else
             {
-                carsExited = enterData(carsExited,current);
+                carsExited = enterData(carsExited,current, lane);
+                lane = "";
             }
             System.out.println(current);
             ioCheck = !ioCheck;
         }
         
     }
-    public int[] enterData(int[] array, String token)
+    public int[] enterData(int[] array, String token, String lane)
     {
-        switch(token){
+        switch(lane){
             case "1":
-                array[0]++;
+                trafficData.laneOne.add(token);
                 break;
             case "2":
-                array[1]++;
+                trafficData.laneTwo.add(token);
                 break;
             case "3":
-                array[2]++;
+                trafficData.laneThree.add(token);
                 break;
             case "4":
-                array[3]++;
+                trafficData.laneFour.add(token);
                 break;
             default:
                 break;
