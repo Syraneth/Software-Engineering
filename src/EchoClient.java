@@ -20,18 +20,19 @@ public class EchoClient
         {
 
             echoSocket = new Socket(serverHostname, portNum);
-
-            OutputThread output = new OutputThread(echoSocket, trafficData); 
-            InputThread input = new InputThread(echoSocket, trafficData);
+            
             TrafficManagerThread traffic = new TrafficManagerThread(echoSocket, trafficData);
+            OutputThread output = new OutputThread(echoSocket, trafficData); 
+            InputThread input = new InputThread(echoSocket, trafficData, traffic);
+            
 
             Thread t1 = new Thread(output); 
             Thread t2 = new Thread(input); 
-            Thread t3 = new Thread(traffic); 
+            //Thread t3 = new Thread(traffic); 
 
             t1.start();
             t2.start();
-            t3.start();
+            //t3.start();
 
         } catch (UnknownHostException e) {
             e.printStackTrace();

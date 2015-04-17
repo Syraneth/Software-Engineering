@@ -15,11 +15,13 @@ public class InputThread implements Runnable {
     Socket echoSocket; 
     EchoClient eClient;
     TrafficData trafficData;
+    TrafficManagerThread trafficManagerThread;
 
-    InputThread(Socket socket, TrafficData tData)
+    InputThread(Socket socket, TrafficData tData, TrafficManagerThread tmThread)
     {
         echoSocket = socket; 
         trafficData = tData;
+        trafficManagerThread = tmThread;
     }
     
     @Override
@@ -30,7 +32,8 @@ public class InputThread implements Runnable {
         try {
             System.out.println("Input: ");
             in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-
+            Thread t3 = new Thread(trafficManagerThread);
+            t3.start();
 
             while (true) {
                 StringTokenizer st = new StringTokenizer(in.readLine(),";");
@@ -55,7 +58,8 @@ public class InputThread implements Runnable {
                     System.out.println(Arrays.toString(trafficData.pedestrians.toArray()));
                 }
                 
-            }		
+            }	
+           
             
         } catch (UnknownHostException e) {  
             System.err.println();

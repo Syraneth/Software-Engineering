@@ -4,11 +4,13 @@ public class OutputThread implements Runnable{
 	
     Socket echoSocket;
     TrafficData trafficData;
+    
 
     OutputThread(Socket socket, TrafficData tData)
     {
         echoSocket = socket; 
         trafficData = tData;
+    
     }
     
     @Override
@@ -22,13 +24,14 @@ public class OutputThread implements Runnable{
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             String userInput;
 
-
+       
             while ((userInput = stdIn.readLine()) != null) 
             {
                 out.println(userInput);
                 System.out.print ("input: ");
             }
             
+         
             
             out.close();
             echoSocket.close();
